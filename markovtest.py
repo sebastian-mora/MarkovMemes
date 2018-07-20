@@ -25,40 +25,42 @@ def generateMarkovChain(text):
     ngrams = {}
     beginnings = []
 
-
-    
     for c, gram in enumerate(text):
+
+        if(c >= len(text)-1):
+            break
+
         if(gram not in ngrams): #if the ngram is not found in the dic create an array for it 
             ngrams[gram]= []
         
-        if(gram is '.' and c < len(text)-2):
-            beginnings.append(ngram[c+2])
-        ngrams[gram] += text[c+1] #add the charater that comes after the ngram
+        if( '.' in gram and c < len(text)-1):
+            beginnings.append(text[c+1])
+        ngrams.setdefault(gram,[]).append(text[c+1]) #add the word that comes after the ngram
     saveData(ngrams,"chain")
     saveData(beginnings,"beginnings")
 
 
 
-def generateText(text,ngrams,beginnings):
+def generateText(ngrams,beginnings):
 
-    currentGram = random.choice(beginnings) #start on the first word
-    result = currentGram
+    currentGram = random.choice(beginnings)
+    result = [currentGram]
 
-    for i in xrange(0,100):
+    for i in xrange(0,15):
         try:
-            possibiilities = ngrams[currentGram]
+            possibilities = ngrams[currentGram]
 
-            if(possibiilities is not None):
-                result += random.choice(ngrams[currentGram])
-                currentGram = result[len(result)-n:len(result)]
-                currentGram = currentGram.lower()
+            if(possibilities is not None):
+                result.append(' ' + random.choice(ngrams[currentGram]))
+                currentGram = result[-1]
+                currentGram = currentGram.strip()
             
                 
         except:
             print("Chain ran dry")
             print(currentGram)
             break
-    return result
+    return " ".join(result)
         
 
 
@@ -76,7 +78,7 @@ beg = loadData("beginnings")
 
 print("Chain loaded properly")
 
-print(generateText(data,markovchain,beg))
+print(generateText(markovchain,beg))
 
 
 
