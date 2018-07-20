@@ -25,6 +25,9 @@ api = tweepy.API(auth)
 
 #api.update_status('Im back')
 
-def get_tweets
+#gest n amount of tweets from the given username
+def get_tweets(username, n): 
+    
+    tweets = api.user_timeline(screen_name=username)
 
 
