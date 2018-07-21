@@ -9,6 +9,7 @@ import tweepy as tweepy
 import time 
 import os
 import csv
+import os.path
 
 
 # Consumer keys and access tokens, used for OAuth
@@ -48,6 +49,7 @@ def get_tweets(username, n):
 	alltweets = []
 
 	for tweet in limit_handled(tweepy.Cursor(api.user_timeline, screen_name = username).items()):
+		
 		alltweets.append(tweet)
 
 	alltweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in alltweets]
@@ -57,8 +59,16 @@ def get_tweets(username, n):
 
 
 def main():
-	get_tweets("@seb1055",200)
-	pass
+
+
+	accounts_tobe_scraped = ['@meatymadison', '@WORLDSTAR',]
+
+	for account in accounts_tobe_scraped:
+		if os.path.isfile("Scraped_TLS/tweets_%s.csv" %account) is False:
+			print("Currently scraping %s" %account)
+			get_tweets(account,200)
+		else:
+			print("%s already exists in the Archive" %account)
     
     
 
