@@ -29,7 +29,7 @@ api = tweepy.API(auth)
 
 
 def save_cvs(data,username):
-	with open("tweets_%s.csv" %username, 'wb') as  csv_file:
+	with open("Scraped_TLS/tweets_%s.csv" %username, 'wb') as  csv_file:
 		writer = csv.writer(csv_file)
 		writer.writerow(['id','created_at','text'])
 		writer.writerows(data)

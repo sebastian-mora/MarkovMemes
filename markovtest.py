@@ -15,7 +15,7 @@ def saveData(obj, name):
 
 
 def loadText(name):
-    with open(name, 'r') as f:
+    with open( name, 'r') as f:
         data = f.read().replace('\n', ' ')
         return data.split()
 
@@ -36,8 +36,8 @@ def generateMarkovChain(text):
         if ('.' in gram and c < len(text) - 1):
             beginnings.append(text[c + 1])
         ngrams.setdefault(gram, []).append(text[c + 1])  # add the word that comes after the ngram
-    saveData(ngrams, "chain")
-    saveData(beginnings, "beginnings")
+    saveData(ngrams, "Markov_Chain/chain")
+    saveData(beginnings, "Markov_Chain/beginnings")
 
 
 def generateText(ngrams, beginnings, max):
@@ -62,17 +62,17 @@ def generateText(ngrams, beginnings, max):
 
 
 def main():
-    file_name = "data.txt"  # change to what ever data set you want
+    file_name = "Markov_Chain/data.txt"  # change to what ever data set you want
     response_len = 25  # this will determine the output length
 
     data = loadText(file_name)
 
-    if os.path.isfile("chain.json") is False:
+    if os.path.isfile("/Markov_Chain/chain.json") is False:
         print("Could not find markovchain generating a new one")
         generateMarkovChain(data)
 
-    markovchain = loadData("chain")
-    beg = loadData("beginnings")
+    markovchain = loadData("Markov_Chain/chain")
+    beg = loadData("Markov_Chain/beginnings")
 
     print("Chain loaded properly")
 
