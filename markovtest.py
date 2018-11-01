@@ -21,7 +21,6 @@ def loadText(name):
 
 
 def generateMarkovChain(text):
-    i = 0
     ngrams = {}
     beginnings = []
 
@@ -36,6 +35,7 @@ def generateMarkovChain(text):
         if ('.' in gram and c < len(text) - 1):
             beginnings.append(text[c + 1])
         ngrams.setdefault(gram, []).append(text[c + 1])  # add the word that comes after the ngram
+
     saveData(ngrams, "Markov_Chain/chain")
     saveData(beginnings, "Markov_Chain/beginnings")
 
@@ -53,7 +53,6 @@ def generateText(ngrams, beginnings, max):
                 currentGram = result[-1]
                 currentGram = currentGram.strip()
 
-
         except:
             print("Chain ran dry")
             print(currentGram)
@@ -62,8 +61,8 @@ def generateText(ngrams, beginnings, max):
 
 
 def main():
-    file_name = "Markov_Chain/data.txt"  # change to what ever data set you want
-    response_len = 25  # this will determine the output length
+    file_name = "Scraped_TLS/tweets.txt"  # change to what ever data set you want
+    response_len = 5  # this will determine the output length
 
     data = loadText(file_name)
 
